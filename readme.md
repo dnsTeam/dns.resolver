@@ -10,60 +10,48 @@
 
 ## **2. 主要功效**
 
-> **加速客户端响应**
-> - 缓存命中时立即返回响应结果，不必每次都请求上游服务器；<br />开发环境局域网缓存命中测试，耗时接近 0 值。
-> - 与互联网相比，局域网一般带宽更高、响应时间更短。
+**加速客户端响应**
+- 缓存命中时立即返回响应结果，不必每次都请求上游服务器；<br />开发环境局域网缓存命中测试，耗时接近 0 值。
+- 与互联网相比，局域网一般带宽更高、响应时间更短。
 
-> **提升安全性和隐私性**
-> - 支持 DoH (DNS over HTTPS) 协议访问上游服务器。
-> - 基于行业通用的 HTTPS 安全协议，请求和响应在传输过程中是对称加密的，可有效防止第三方监视和篡改，从此告别 DNS 劫持和污染。
+**提升安全性和隐私性**
+- 支持 DoH (DNS over HTTPS) 协议访问上游服务器。
+- 基于行业通用的 HTTPS 安全协议，请求和响应在传输过程中是对称加密的，可有效防止第三方监视和篡改，从此告别 DNS 劫持和污染。
 
-> **自定义域名解析**【待实现】
-> - 基于用户配置，自定义特定域名的 DNS 响应结果。
-> - 支持 A、AAAA、CName、MX 等常见记录类型。
+**自定义域名解析**【待实现】
+- 基于用户配置，自定义特定域名的 DNS 响应结果。
+- 支持 A、AAAA、CName、MX 等常见记录类型。
 
-> **拦截广告、跟踪、恶意软件、钓鱼或欺诈域名等**【待实现】
-> - 基于规则进行判断，命中时返回 NxDomain 状态码。
-> - 规则清单可通过互联网定时刷新。
+**拦截广告、跟踪、恶意软件、钓鱼或欺诈域名等**【待实现】
+- 基于规则进行判断，命中时返回 NxDomain 状态码。
+- 规则清单可通过互联网定时刷新。
 
-## **3. 用作本地 DNS 服务器**
+## **3. 安装应用**
 
-**3.1. 修改配置，启动应用**
+- 下载应用压缩包并解压。
+- 拷贝一份 ` appsettings.sample.json ` 文件，重命名为 ` appsettings.json ` 。
+- 根据需要修改 ` appsettings.json ` 中的配置信息。
+- 根据需要赋予运行权限，运行应用程序。
 
-- 在 appsettings.json 文件中，将 dns/local/bind 设为 ` [ "udp://127.0.0.1:53" ] ` ( IPv4 )<br />或 ` [ "udp://[::1]:53" ] ` ( IPv6 ) 。
-- 本地运行 cnr.exe 应用程序。
+## **4. 用作本地或局域网 DNS 服务器**
 
-**3.2. 验证 DNS 响应**【可选】
+**4.1. 修改配置**
 
-- 在 windows 命令行中可输入 `nslookup github.com 127.0.0.1` ( IPv4 ) 或 `nslookup github.com ::1` ( IPv6 ) 。
+- 在 appsettings.json 文件中，将 dns/local/bind 设为 ` [ "127.0.0.1" ] ` 、 ` [ "A.B.C.D" ] ` ( IPv4 )<br />或 ` [ "::1" ] ` 、 ` [ "A:B:C:D:E:F:G:H" ] ` ( IPv6 )，其中：
+  * ` A.B.C.D ` 为本地网络连接的局域网 IPv4 地址 。
+  * ` A:B:C:D:E:F:G:H ` 为本地网络连接的局域网 IPv6 地址 。
 
-- 在 linux 命令行中可输入 `dig github.com @127.0.0.1` ( IPv4 ) 或 `dig github.com @::1` ( IPv6 ) 。
-
-**3.3. 修改操作系统设置**
-
-- 将本地 DNS 服务器地址改为 `127.0.0.1` ( IPv4 ) 或 `::1` ( IPv6 ) 。
-
-## **4. 用作局域网 DNS 服务器**
-
-**4.1. 修改配置，启动应用**
-
-- 在 appsettings.json 文件中，将 dns/local/bind 设为 ` [ "udp://A.B.C.D:53" ] ` ( IPv4 )<br />或 ` [ "udp://[A:B:C:D:E:F:G:H]:53" ] ` ( IPv6 )，其中：
-  * `A.B.C.D` 为本地网络连接的局域网 IPv4 地址 。
-  * `A:B:C:D:E:F:G:H` 为本地网络连接的局域网 IPv6 地址 。
-
-    > IPv6 局域网地址段 ( Unique Local Address，ULA ) 为 `FC00::/7` ，详见 [`RFC4193`](https://www.rfc-editor.org/rfc/rfc4193.html)。
-
-- 本地运行 cnr.exe 应用程序。
+    > IPv6 局域网地址段 ( Unique Local Address，ULA ) 为 ` FC00::/7 ` ，详见 [ ` RFC4193 ` ](https://www.rfc-editor.org/rfc/rfc4193.html)。
 
 **4.2. 验证 DNS 响应**【可选】
 
-- 在 windows 命令行中可输入 `nslookup github.com A.B.C.D` ( IPv4 )<br />或 `nslookup github.com A:B:C:D:E:F:G:H` ( IPv6 ) 。
+- 在 windows 命令行中可输入 ` nslookup github.com server ` 。
 
-- 在 linux 命令行中可输入 `dig github.com @A.B.C.D` ( IPv4 ) 或 `dig github.com @A:B:C:D:E:F:G:H` ( IPv6 ) 。
+- 在 linux 命令行中可输入 ` dig github.com @server ` 。
 
 **4.3. 修改操作系统设置**
 
-- 将本地 DNS 服务器地址改为 `A.B.C.D` ( IPv4 ) 或 `A:B:C:D:E:F:G:H` ( IPv6 ) 。
+- 将本地 DNS 服务器地址改为 ` 127.0.0.1 ` 、 ` A.B.C.D ` ( IPv4 ) 或 ` ::1 ` 、 ` A:B:C:D:E:F:G:H ` ( IPv6 ) 。
 
 ## **5. 运行方式**
 
