@@ -37,7 +37,7 @@
 
 **4.1. 修改配置**
 
-- 在 appsettings.json 文件中，将 dns/local/bind 设为 ` [ "127.0.0.1" ] ` 、 ` [ "A.B.C.D" ] ` ( IPv4 )<br />或 ` [ "::1" ] ` 、 ` [ "A:B:C:D:E:F:G:H" ] ` ( IPv6 )，其中：
+- 在 appsettings.json 文件中，将 dns/local/bind 设为 ` [ "127.0.0.1" ] ` 、<br />` [ "A.B.C.D" ] ` ( IPv4 ) 或 ` [ "::1" ] ` 、 ` [ "A:B:C:D:E:F:G:H" ] ` ( IPv6 )，其中：
   * ` A.B.C.D ` 为本地网络连接的局域网 IPv4 地址 。
   * ` A:B:C:D:E:F:G:H ` 为本地网络连接的局域网 IPv6 地址 。
 
