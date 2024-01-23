@@ -1,6 +1,7 @@
 ## **✨ dns.resolver ✨**
 
 一个缓存优先的 DNS 解析程序，可以在 Windows、Linux 和 macOS 中运行，用作本地或局域网 DNS 服务器。
+
   > 如果你喜欢或觉得有用，就给它一个 GitHub Star 。
 
 ## **1. 拓扑结构**
@@ -37,6 +38,7 @@
 ### **3.1. 直接运行**
 
 在 windows、Linux 和 macOS 中直接双击打开运行应用程序，或在命令行中运行应用程序。
+
   > 应用显示 `Running... Press <enter> key to exit.` 提示信息。
 
 在试用的时候，可以先尝试此方式。
