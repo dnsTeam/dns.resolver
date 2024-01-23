@@ -1,7 +1,7 @@
 ## **✨ dns.resolver ✨**
 
 一个缓存优先的 DNS 解析程序，可以在 Windows、Linux 和 macOS 中运行，用作本地或局域网 DNS 服务器。
-> 如果你喜欢或觉得有用，就给它一个 GitHub Star 。
+  > 如果你喜欢或觉得有用，就给它一个 GitHub Star 。
 
 ## **1. 拓扑结构**
 
@@ -37,7 +37,7 @@
 ### **3.1. 直接运行**
 
 在 windows、Linux 和 macOS 中直接双击打开运行应用程序，或在命令行中运行应用程序。
-> 应用显示 `Running... Press <enter> key to exit.` 提示信息。
+  > 应用显示 `Running... Press <enter> key to exit.` 提示信息。
 
 在试用的时候，可以先尝试此方式。
 
@@ -54,7 +54,7 @@
 
 ## **4. 配置文件说明**
 
-配置文件 appsettings.json 位于 dns 应用程序相同的文件夹下。
+配置文件 appsettings.json 位于应用程序相同的文件夹下。
 
 ### **4.1. 样例**
 
@@ -190,7 +190,7 @@ DNS 上游服务器配置信息。
 <!-- | DNS-over-HTTPS | `https://dns.alidns.com/dns-query` |
 | DNS-over-TLS   | `tls://dns.alidns.com`                 | -->
 
-- **360安全DNS**
+- **360 安全 DNS**
 
 |      协议      |                     地址                       |
 | :------------: | :--------------------------------------------: |
@@ -207,7 +207,7 @@ DNS 上游服务器配置信息。
 
 ## **7. 赞助**
 
-您的支持，我的动力！ 更是 dns.resolver 获得长期运维的保障，谢谢！
+您的支持，我的动力！ 更是 dns.resolver 获得长期运维的保障！ 万分感谢！
 
 <table border="0" cellspacing="0" cellPadding="0" style="border:0">
 <tr>
