@@ -38,8 +38,7 @@
 ### **3.1. 直接运行**
 
 在 windows、Linux 和 macOS 中直接双击打开运行应用程序，或在命令行中运行应用程序。
-
-  > 应用显示 `Running... Press <enter> key to exit.` 提示信息。
+    > 应用显示 `Running... Press <enter> key to exit.` 提示信息。
 
 在试用的时候，可以先尝试此方式。
 
