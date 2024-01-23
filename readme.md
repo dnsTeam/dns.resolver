@@ -11,7 +11,7 @@
 
 - **加速客户端响应**
   * 缓存命中时立即返回响应结果，不必每次都请求上游服务器；
-    > 开发环境 dig 报告 ` Query time: 0 msec ` 。
+    > 开发环境 dig ` Query time: 0 msec ` 。
   * 一般情况下，局域网带宽更高、响应时间更短。
 
 - **提升安全性和隐私性**
@@ -73,10 +73,10 @@
                 "https://223.6.6.6/dns-query",     // AliDNS（阿里），DoH (IP)
                 "https://1.12.12.12/dns-query",    // DNSPod（腾讯），DoH (IP)
                 "https://120.53.53.53/dns-query",  // DNSPod（腾讯），DoH (IP)
-                "https://101.226.4.6/dns-query",   // 360安全DNS，DoH (IP)，电信、移动、铁通首选
-                "https://218.30.118.6/dns-query",  // 360安全DNS，DoH (IP)，电信、移动、铁通备用
-                "https://123.125.81.6/dns-query",  // 360安全DNS，DoH (IP)，联通首选
-                "https://140.207.198.6/dns-query", // 360安全DNS，DoH (IP)，联通备用
+                "https://101.226.4.6/dns-query",   // 360 安全 DNS，DoH (IP)，电信、移动、铁通首选
+                "https://218.30.118.6/dns-query",  // 360 安全 DNS，DoH (IP)，电信、移动、铁通备用
+                "https://123.125.81.6/dns-query",  // 360 安全 DNS，DoH (IP)，联通首选
+                "https://140.207.198.6/dns-query", // 360 安全 DNS，DoH (IP)，联通备用
                 "/name.lan/A1.B1.C1.D1",           // 解析 name.lan 的上游服务器 1
                 "/name.lan/A2.B2.C2.D2"            // 解析 name.lan 的上游服务器 2
             ],
@@ -127,7 +127,7 @@ DNS 上游服务器配置信息。
 - **server：上游服务器信息**
 
   * 格式： ` “限定域名 + 协议 + IP 地址 + 端口号” ` ；多个上游服务器用 ` 英文逗号 ` 分隔。
-    > 采用 ` IP 地址 ` 可避免上游服务器在多个运营商网络切换带来性能波动。
+    > 采用 IP 地址可避免上游服务器在多个运营商网络切换带来性能波动。
   * 示例：
     + ` A.B.C.D ` ：默认 ` udp ` 协议、默认 ` 53 ` 端口；
     + ` A.B.C.D:53 ` ：默认 ` udp ` 协议、指定 ` 53 ` 端口；
@@ -143,7 +143,7 @@ DNS 上游服务器配置信息。
   * 缓存未命中时，同时访问多个上游服务器的取值模式，有 any 和 all 两个可选项。
     + any : 任一上游服务器返回结果，就继续处理；其他上游服务器在后台继续处理。 `【建议】`
     + all : 等待上游服务器全都返回结果，才继续处理。
-    > 两种模式最终都会合并上游服务器的全部响应结果，去重后存储到缓存中。
+      > 两种模式最终都会合并上游服务器的全部响应结果，去重后存储到缓存中。
 
 - **timeout**
 
@@ -160,7 +160,7 @@ DNS 上游服务器配置信息。
 - **refreshOnCall**
 
   * 在缓存有效期内，每次客户端请求，立即返回缓存中的解析结果。
-  * 当 refreshOnCall = true 时，继续在后台采用 all 模式请求上游服务器，并刷新缓存内容。
+  * 当 ` refreshOnCall = true ` 时，继续在后台采用 all 模式请求上游服务器，并刷新缓存内容。
 
 ## **6. 已知的公共 DNS 服务器**
 
@@ -207,12 +207,12 @@ DNS 上游服务器配置信息。
 
 ## **7. 赞助**
 
-您的支持，我的动力！！！更是 dns.resolver 获得长期运维的保障，谢谢！
+您的支持，我的动力！ 更是 dns.resolver 获得长期运维的保障，谢谢！
 
 <table border="0" cellspacing="0" cellPadding="0" style="border:0">
 <tr>
   <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="img/alipay.jpg" height="200" width="200" /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
-  <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="img/wechatpay.jpg" height="200" width="200" /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
+  <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="img/wechat.jpg" height="200" width="200" /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
 </tr>
 <tr>
   <td align="center">支付宝扫码</td>
