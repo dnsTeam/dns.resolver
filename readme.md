@@ -32,8 +32,8 @@
 - 下载相应版本的应用压缩包并解压。
 - 复制一份 ` appsettings.sample.json ` 文件，重命名为 ` appsettings.json ` 。
 - 根据需要修改 ` appsettings.json ` 中的配置信息。
-- 根据需要打开防火墙，允许应用通过防火墙，或放开配置文件中 ` dns/local/bind ` 本地侦听端口 。
-- 根据需要赋予运行权限。
+- 根据需要打开防火墙，允许应用通过防火墙，或放开配置文件中的本地侦听端口 。
+- 根据需要为应用程序文件授予运行权限。
 
 ### **3.1. 直接运行**
 
@@ -47,8 +47,8 @@
 
 以 windows 为例：
 - 在 ` 开始 ` 菜单 ` Windows 管理工具 ` 中打开 ` 任务计划程序 ` 。
-- 点击 ` 创建任务 ` ，在弹出窗口中名称输入 ` dns.resolver ` ，选择 ` 不管用户是否登录都要运行 ` 。
-- 触发器页签点击 ` 新建 ` 按钮；` 开始任务 ` 选择 ` 启动时 `；根据需要设置 ` 延迟任务时间 `，实现启动一段时间后启动。
+- 点击 ` 创建任务 ` ，在弹出窗口中输入名称 ` dns.resolver ` ，选择 ` 不管用户是否登录都要运行 ` 。
+- 触发器页签点击 ` 新建 ` 按钮；` 开始任务 ` 选择 ` 启动时 `；根据需要设置 ` 延迟任务时间 `，实现启动一段时间后运行。
 - 操作页签点击 ` 新建 ` 按钮；` 操作 ` 选择 ` 启动程序 `；设置 ` 程序或脚本 ` 为应用全路径，例如： ` C:\dns.resolver\dns.exe ` ；` 起始于 ` 设置为 ` C:\dns.resolver `。
 - 条件页签，根据需要选择去除 ` 只有在计算机使用交流电源时才启动此任务 ` 选项。
 - 设置页签，根据需要选择去除 ` 如果任务运行时间超过以下时间，停止任务 ` 选项。
@@ -74,73 +74,73 @@
 
 - 将本地 DNS 服务器地址改为 ` 127.0.0.1 ` 、 ` A.B.C.D ` ( IPv4 ) 或 ` ::1 ` 、 ` A:B:C:D:E:F:G:H ` ( IPv6 ) 。
 
-## **5. 配置文件说明**
+## **4. 配置文件说明**
 
-配置文件 appsettings.json 位于 cnr.exe 相同的文件夹下。
+配置文件 appsettings.json 位于 dns 应用程序相同的文件夹下。
 
-### **5.1. 样例**
+### **4.1. 样例**
 
 采用 JSON 格式，如下所示：
 
-> ```
-> {
->   "dns": {
->     "local": {
->       "bind": [ "udp://127.0.0.1:53", "udp://A.B.C.D:53" ],
->       "timeout": 1000
->     },
->     "upstream": {
->       "server": [ "https://223.5.5.5/dns-query", "https://223.6.6.6/dns-query",
->                   "[name.lan]udp://A1.B1.C1.D1:5353" ], "[name.lan]udp://A2.B2.C2.D2:5353" ]
->       "mode": "any",
->       "timeout": 2000
->     },
->     "cache": {
->       "timeout": 600000,
->       "refreshOnCall": false
->     }
->   }
-> }
-> ```
+```
+{
+  "dns": {
+    "local": {
+      "bind": [ "127.0.0.1", "A.B.C.D" ],
+      "timeout": 1000
+    },
+    "upstream": {
+      "server": [ "https://223.5.5.5/dns-query",
+                  "https://223.6.6.6/dns-query",
+                  "[name.lan]A1.B1.C1.D1" ],
+                  "[name.lan]A2.B2.C2.D2" ]
+      "mode": "any",
+      "timeout": 2000
+    },
+    "cache": {
+      "timeout": 600000,
+      "refreshOnCall": false
+    }
+  }
+}
+```
 
-### **5.2. dns 配置节**
+### **4.2. dns 配置节**
 
 DNS 相关配置的根节点。
 
-#### **5.2.1. dns/local 配置节**
+#### **4.2.1. dns/local 配置节**
 
 DNS 本地配置信息。
 
 - **bind：本地绑定信息。**
 
-  * 每个元素采用` “ 协议 + IP 地址 + 端口号 ” `的形式。
-  * 当前支持 ` udp ` 和 ` tcp ` 协议；如无特殊需要，建议只开放 ` udp ` 协议即可，性能和兼容性都很好。
-  * 未指定时，端口号默认为 ` 53 ` 。
-  * 支持多个绑定，中间用英文逗号分隔。
-  * 每个地址都必须是运行环境本地存在的 IP 地址。
+  * 每个元素采用 ` “ 协议 + IP 地址 + 端口号 ” ` 的形式，中间用 ` 英文逗号 ` 分割。
+  * ` 协议 ` 支持 ` udp ` 和 ` tcp ` ；可选，为空时默认为 ` udp ` 
+    > 如无特殊需要，建议只开放 ` udp ` 协议，性能和兼容性都很好。
+  * 端口号可选，为空时默认为 ` 53 ` 。
 
 - **timeout**
 
   * 客户端访问本应用，单次交互接收数据和发送数据的超时时间，单位：毫秒。
 
-#### **5.2.2. dns/upstream 配置节**
+#### **4.2.2. dns/upstream 配置节**
 
 DNS 上游服务器配置信息。
 
-- **server**
+- **server：上游服务器信息**
 
-  * 上游服务器信息。
-  * 每个元素采用` “限定域名 + 协议 + IP 地址 + 端口号” `的形式。
-    + ` 限定域名 `在方括号中间，可选，为空时纳入默认上游服务器列表。
-    + 当前支持 ` udp ` 、 ` tcp ` 和 ` https ` 协议；可根据个人需要进行配置。
-    + 采用 ` IP 地址 ` 配置上游服务器，可有效避免域名解析为跨运营商网络 IP 地址带来的性能波动。
+  * 每个元素采用 ` “限定域名 + 协议 + IP 地址 + 端口号” ` 的形式。
+    + ` 限定域名 ` 在方括号中间，可选，为空时纳入默认上游服务器列表。
+    + ` 协议 ` 支持 ` udp ` 、 ` tcp ` 和 ` https ` ；可根据个人需要进行配置。
+    + 采用 ` IP 地址 ` 可有效避免上游服务器在多个运营商网络切换带来性能波动。
   * 支持多个上游服务器，中间用英文逗号分隔。
 
 - **mode**
 
   * 缓存未命中时，同时访问多个上游服务器的取值模式，有 any 和 all 两个可选项。
-    + any : 任一上游服务器返回结果就继续处理；其他上游服务器在后台继续处理。`【建议选用】`
-    + all : 全部上游服务器都返回结果后，继续处理。
+    + any : 任一上游服务器返回结果，就继续处理；其他上游服务器在后台继续处理。 `【建议】`
+    + all : 等待上游服务器全都返回结果，才继续处理。
 
     > 两种模式最终都会合并上游服务器的全部响应结果，去重后存储到缓存中。
 
@@ -148,7 +148,7 @@ DNS 上游服务器配置信息。
 
   * 本应用访问上游服务器，单次交互接收数据和发送数据的超时时间，单位：毫秒。
 
-#### **5.2.3. dns/cache 配置节**
+#### **4.2.3. dns/cache 配置节**
 
 缓存上游服务器解析结果的配置信息。
 
@@ -167,44 +167,46 @@ DNS 上游服务器配置信息。
 
 |      协议      |            地址                  |
 | :------------: | :------------------------------: |
-| DNS, IPv4      | `udp://119.29.29.29:53`          |
-| DNS, IPv4      | `udp://119.28.28.28:53`          |
-| DNS, IPv6      | `udp://[2402:4e00::]:53`         |
+| DNS, IPv4      | `119.29.29.29`                   |
+| DNS, IPv4      | `119.28.28.28`                   |
+| DNS, IPv6      | `2402:4e00::`                    |
 | DNS-over-HTTPS | `https://1.12.12.12/dns-query`   |
 | DNS-over-HTTPS | `https://120.53.53.53/dns-query` |
-| DNS-over-HTTPS | `https://doh.pub/dns-query`      |
+<!-- | DNS-over-HTTPS | `https://doh.pub/dns-query`      |
 | DNS-over-HTTPS | `https://dns.pub/dns-query`      |
-<!-- | DNS-over-TLS   | `tls://dot.pub`                   | -->
+| DNS-over-TLS   | `tls://dot.pub`                   | -->
 
 - **Alidns（阿里巴巴）**
 
 |      协议      |              地址                  |
 | :------------: | :--------------------------------: |
-| DNS, IPv4      | `udp://223.5.5.5:53`               |
-| DNS, IPv4      | `udp://223.6.6.6:53`               |
-| DNS, IPv6      | `udp://[2400:3200::1]:53`          |
-| DNS, IPv6      | `udp://[2400:3200:baba::1]:53`     |
+| DNS, IPv4      | `223.5.5.5`                        |
+| DNS, IPv4      | `223.6.6.6`                        |
+| DNS, IPv6      | `2400:3200::1`                     |
+| DNS, IPv6      | `2400:3200:baba::1`                |
 | DNS-over-HTTPS | `https://223.5.5.5/dns-query`      |
 | DNS-over-HTTPS | `https://223.6.6.6/dns-query`      |
-| DNS-over-HTTPS | `https://dns.alidns.com/dns-query` |
-<!-- | DNS-over-TLS   | `tls://dns.alidns.com`                 | -->
+<!-- | DNS-over-HTTPS | `https://dns.alidns.com/dns-query` |
+| DNS-over-TLS   | `tls://dns.alidns.com`                 | -->
 
 - **360安全DNS**
 
 |      协议      |                     地址                       |
 | :------------: | :--------------------------------------------: |
-| DNS, IPv4（电信/铁通/移动） | `udp://101.226.4.6:53`            |
-| DNS, IPv4（电信/铁通/移动） | `udp://218.30.118.6:53`           |
-| DNS, IPv4（联通）           | `udp://123.125.81.6:53`           |
-| DNS, IPv4（联通）           | `udp://140.207.198.6:53`          |
-| DNS-over-HTTPS（联通）      | `https://123.125.81.6/dns-query`  |
-| DNS-over-HTTPS（联通）      | `https://140.207.198.6/dns-query` |
-| DNS-over-HTTPS              | `https://doh.360.cn/dns-query`    |
-<!-- | DNS-over-TLS                | `tls://dot.360.cn`                 | -->
+| DNS, IPv4（电信/铁通/移动）      | `101.226.4.6`                     |
+| DNS, IPv4（电信/铁通/移动）      | `218.30.118.6`                    |
+| DNS, IPv4（联通）                | `123.125.81.6`                    |
+| DNS, IPv4（联通）                | `140.207.198.6`                   |
+| DNS-over-HTTPS（电信/铁通/移动） | `https://101.226.4.6/dns-query`  |
+| DNS-over-HTTPS（电信/铁通/移动） | `https://218.30.118.6/dns-query` |
+| DNS-over-HTTPS（联通）           | `https://123.125.81.6/dns-query`  |
+| DNS-over-HTTPS（联通）           | `https://140.207.198.6/dns-query` |
+<!-- | DNS-over-HTTPS              | `https://doh.360.cn/dns-query`    |
+| DNS-over-TLS                | `tls://dot.360.cn`                 | -->
 
 ## **7. 赞助**
 
-您的支持，是我的动力，更是 CachedNameResolver 可以获得长期运维的保障，谢谢！
+您的支持，是我的动力，更是 dns.resolver 可以获得长期运维的保障，谢谢！
 
 <table border="0" cellspacing="0" cellPadding="0" style="border:0">
 <tr>
@@ -212,7 +214,7 @@ DNS 上游服务器配置信息。
   <td> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<img src="img/wechatpay.jpg" height="200" width="200" /> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</td>
 </tr>
 <tr>
-  <td align="center">用支付宝赞助</td>
-  <td align="center">用微信支付赞助</td>
+  <td align="center">支付宝扫码</td>
+  <td align="center">微信扫码</td>
 </tr>
 </table>
