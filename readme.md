@@ -169,7 +169,7 @@ DNS 上游服务器配置信息。
 - 在 windows 命令行中可输入 `nslookup github.com server` 。
 - 在 linux 命令行中可输入 `dig github.com @server` 。
 
-## **5. 已知的公共 DNS 服务器**
+## **6. 已知的公共 DNS 服务器**
 
 - **DNSPod（腾讯）**
 
@@ -212,7 +212,7 @@ DNS 上游服务器配置信息。
 <!-- | DNS-over-HTTPS              | `https://doh.360.cn/dns-query`    |
 | DNS-over-TLS                | `tls://dot.360.cn`                 | -->
 
-## **6. 赞助**
+## **7. 赞助**
 
 您的支持，我的动力！ 更是 dns.resolver 获得长期运维的保障！ 万分感谢！
 
