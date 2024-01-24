@@ -1,7 +1,7 @@
 ## **✨ dns.resolver ✨**
 
 一个缓存优先的 DNS 解析程序，可以在 Windows、Linux 和 macOS 中运行，用作本地或局域网 DNS 服务器。
-<div style="padding-left: 2em;"><blockquote><p dir="auto">如果你喜欢或觉得有用，就给它一个 GitHub Star 。</p></blockquote></div>
+<div style="margin-left: 2em;"><blockquote style="margin-left: 2em;"><p dir="auto">如果你喜欢或觉得有用，就给它一个 GitHub Star 。</p></blockquote></div>
    > 如果你喜欢或觉得有用，就给它一个 GitHub Star 。
 
 ## **1. 拓扑结构**
