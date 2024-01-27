@@ -3,6 +3,7 @@
 一个缓存优先的 DNS 解析程序，可以在 Windows、Linux 和 macOS 中运行，用作本地或局域网 DNS 服务器。
 
 > 如果您喜欢或觉得有用，给它一个 GitHub Star 。
+
 > 如果您在使用过程中遇到了问题，通过 GitHub Issues 功能告诉我。
 
 ## **1. 拓扑结构**
