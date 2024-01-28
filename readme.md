@@ -98,6 +98,12 @@
         "cache": {
             "timeout": 600000,
             "refreshOnCall": false
+        },
+        "custom": {
+            "a": [ "/name.lan/A1.B1.C1.D1", "/name.lan/A2.B2.C2.D2" ]
+            "aaaa": [ "/name.lan/A:B:C:D:E:F:G:H"" ]
+            "cname": [ "/name.lan/cname.lan" ]
+            "mx": [ "/name.lan/10 mx.name.lan" ]
         }
     }
 }
@@ -196,7 +202,7 @@ DNS 上游服务器配置信息。
   * 自定义 AAAA 记录域名解析，格式： ` “域名 + IPv6 地址” ` 。
     + 多个自定义解析用 ` 英文逗号 ` 分隔。
   * 示例：
-    + ` /name.lan/A.B.C.D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A.B.C.D:E:F:G:H ` ；
+    + ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` ；
 
 - **cname**
 
