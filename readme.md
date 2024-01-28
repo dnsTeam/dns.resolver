@@ -4,7 +4,7 @@
 
 > 如果您喜欢或觉得有用，给它一个 GitHub Star 。
 
-> 如果您在使用过程中遇到了问题，通过 GitHub Issues 功能告诉我。
+> 如果您在使用过程中遇到了问题，通过 GitHub Issues 告诉我。
 
 ## **1. 拓扑结构**
 
@@ -153,7 +153,7 @@ DNS 上游服务器配置信息。
     + ` tcp://A.B.C.D ` ：指定 ` tcp ` 协议、默认 ` 53 ` 端口；
     + ` tcp://A.B.C.D:53 ` ：指定 ` tcp ` 协议、指定 ` 53 ` 端口；
     + ` https://A.B.C.D/dns-query ` ：加密 DoH ( DNS-over-HTTPS )；
-    + ` /name.lan/A.B.C.D" ` ：为特定域名 ` name.lan ` 指定上游服务器。
+    + ` /name.lan/A.B.C.D ` ：为特定域名 ` name.lan ` 指定上游服务器。
   * 采用 IP 地址可避免上游服务器在多个运营商网络切换带来性能波动。
 
 - **mode**
@@ -179,6 +179,39 @@ DNS 上游服务器配置信息。
 
   * 有效期内，客户端请求时，立即返回命中的缓存结果。
   * 当 ` refreshOnCall = true ` 时，启动后台刷新任务，更新缓存内容，滑动缓存有效期。
+
+#### **4.2.4. dns/custom 配置节**
+
+自定义域名解析的配置信息。
+
+- **a**
+
+  * 自定义 A 记录域名解析，格式： ` “域名 + IPv4 地址” ` 。
+    + 多个自定义解析用 ` 英文逗号 ` 分隔。
+  * 示例：
+    + ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` ；
+
+- **aaaa**
+
+  * 自定义 AAAA 记录域名解析，格式： ` “域名 + IPv6 地址” ` 。
+    + 多个自定义解析用 ` 英文逗号 ` 分隔。
+  * 示例：
+    + ` /name.lan/A.B.C.D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A.B.C.D:E:F:G:H ` ；
+
+- **cname**
+
+  * 自定义 CName 记录域名解析，格式： ` “域名 + 别名” ` 。
+    + 多个自定义解析用 ` 英文逗号 ` 分隔。
+  * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
+  * 示例：
+    + ` /name.lan/cname.lan ` ：` cname.lan ` 为 ` name.lan ` 的别名；
+
+- **mx**
+
+  * 自定义 MX 记录域名解析，格式： ` “域名 + 优先级 + 指向 A 或 AAAA 记录” ` 。
+    + 多个自定义解析用 ` 英文逗号 ` 分隔。
+  * 示例：
+    + ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` ；
 
 ## **5. 验证 DNS 响应**
 
