@@ -100,9 +100,9 @@
             "refreshOnCall": false
         },
         "custom": {
-            "a": [ "/name.lan/A1.B1.C1.D1", "/name.lan/A2.B2.C2.D2" ]
-            "aaaa": [ "/name.lan/A:B:C:D:E:F:G:H"" ]
-            "cname": [ "/name.lan/cname.lan" ]
+            "a": [ "/name.lan/A1.B1.C1.D1", "/name.lan/A2.B2.C2.D2" ],
+            "aaaa": [ "/name.lan/A:B:C:D:E:F:G:H"" ],
+            "cname": [ "/name.lan/cname.lan" ],
             "mx": [ "/name.lan/10 mx.name.lan" ]
         }
     }
