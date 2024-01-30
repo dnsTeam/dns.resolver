@@ -33,20 +33,56 @@
 - 下载相应版本的应用压缩包，解压到合适的文件夹，例如： ` C:\dns.resolver ` 。
 - 复制一份 ` appsettings.sample.json ` 文件，重命名为 ` appsettings.json ` 。
 - 根据需要修改 ` appsettings.json ` 中的配置信息；详见 ` 4. 配置文件说明 ` 。
-- 根据需要打开防火墙，允许应用通过防火墙，或开放配置文件中的本地侦听端口 。
-- 根据需要为应用程序文件授予运行权限。
+- 根据需要，允许应用通过防火墙，或开放配置文件中的本地侦听端口 。
+- 根据需要，为应用程序文件授予运行权限。
 
 ### **3.1. 直接运行**
 
-在 windows、Linux 和 macOS 中直接双击打开运行应用程序，或在命令行中运行应用程序。
-
-  > 应用显示 `Running... Press <enter> key to exit.` 提示信息。
-
 试用的时候，可以选择此方式。
 
-### **3.2. 任务计划**
+- 在 windows 中直接双击打开运行应用程序。
 
-以 windows 为例：
+- 在 windows 命令行中，
+  * ` cd C:\dns.resolver ` ；
+  * ` dns ` 。
+
+- 在 Linux 命令行中，
+  * ` cd /dns.resolver ` ；
+  * ` ./dns ` 。
+
+  > 应用显示 ` Running... ` 提示信息。
+
+### **3.2. linux systemd**
+
+- 在 ` /lib/systemd/system/ ` 目录创建 ` dns.resolver.service ` 文件，内容示例如下：
+
+```
+[Unit]
+Description=dns.resolver
+ConditionFileIsExecutable=/dns.resolver/dns
+After=network-online.target 
+
+[Service]
+WorkingDirectory=/dns.resolver/
+ExecStart=/dns.resolver/dns
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+SyslogIdentifier=dns.resolver
+User=root
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- 在命令行输入
+  * ` systemctl daemon-reload ` 刷新服务列表。
+  * ` systemctl start dns.resolver ` 启动服务。
+  * ` systemctl enable dns.resolver ` 将服务加入开机启动列表。
+  * ` systemctl status dns.resolver ` 或 ` journalctl -xeu dns.resolver ` 查看日志。
+
+### **3.3. windows 任务计划**
+
 - 在 ` 开始 ` 菜单 ` Windows 管理工具 ` 中，打开 ` 任务计划程序 ` 。
 - 点击 ` 创建任务 ` ，
   * 输入名称 ` dns.resolver ` ，
@@ -195,14 +231,14 @@ DNS 上游服务器配置信息。
   * 自定义 A 记录域名解析，格式： ` “域名 + IPv4 地址” ` 。
     + 多个自定义解析用 ` 英文逗号 ` 分隔。
   * 示例：
-    + ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` ；
+    + ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` 。
 
 - **aaaa**
 
   * 自定义 AAAA 记录域名解析，格式： ` “域名 + IPv6 地址” ` 。
     + 多个自定义解析用 ` 英文逗号 ` 分隔。
   * 示例：
-    + ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` ；
+    + ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
 
 - **cname**
 
@@ -210,14 +246,15 @@ DNS 上游服务器配置信息。
     + 多个自定义解析用 ` 英文逗号 ` 分隔。
   * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
   * 示例：
-    + ` /name.lan/cname.lan ` ：` cname.lan ` 为 ` name.lan ` 的别名；
+    + ` /name.lan/cname.lan ` ：` cname.lan ` 为 ` name.lan ` 的别名。
 
 - **mx**
 
   * 自定义 MX 记录域名解析，格式： ` “域名 + 优先级 + 指向 A 或 AAAA 记录” ` 。
     + 多个自定义解析用 ` 英文逗号 ` 分隔。
+    + 优先级和指向记录之间用 ` 英文空格 ` 分隔。
   * 示例：
-    + ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` ；
+    + ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
 
 ## **5. 验证 DNS 响应**
 
