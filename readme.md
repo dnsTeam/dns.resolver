@@ -221,18 +221,18 @@ DNS 上游服务器配置信息。
 
 自定义域名解析的配置信息；多个配置用 ` 英文逗号 ` 分隔。
 
-- **a**：自定义 A 记录域名解析
+- **a**：自定义 A 记录
 
   * 示例： ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` 。
 
-- **aaaa**：自定义 AAAA 记录域名解析
+- **aaaa**：自定义 AAAA 记录
   * 示例： ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
 
-- **cname**：自定义 CName 记录域名解析
+- **cname**：自定义 CName 记录
   * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
   * 示例： ` /name.lan/cname.lan ` ：将 ` name.lan ` 指向 ` cname.lan ` 。
 
-- **mx**：自定义 MX 记录域名解析
+- **mx**：自定义 MX 记录
   * 优先级和指向记录之间用 ` 英文空格 ` 分隔。
   * 示例： ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
 
