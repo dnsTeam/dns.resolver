@@ -166,9 +166,7 @@ DNS 本地配置信息。
     + ` tcp://127.0.0.1:53 ` ：指定 ` tcp ` 协议、指定 ` 53 ` 端口。
   * 用作本地 DNS 服务器，可设为 ` [ "127.0.0.1" ] ` ( IPv4 ) 或 ` [ "::1" ] ` ( IPv6 ) 。
   * 用作局域网 DNS 服务器，可设为 ` [ "A.B.C.D" ] ` ( IPv4 ) 或 ` [ "A:B:C:D:E:F:G:H" ] ` ( IPv6 ) 。
-    + ` A.B.C.D ` 为本地网络连接的局域网 IPv4 地址 。
-    + ` A:B:C:D:E:F:G:H ` 为本地网络连接的局域网 IPv6 地址 。
-      > IPv6 局域网地址 ( Unique Local Address，ULA ) 为 ` FC00::/7 ` 网段，详见 [ ` RFC4193 ` ](https://www.rfc-editor.org/rfc/rfc4193.html)。
+    + IPv6 局域网地址 ( Unique Local Address，ULA ) 为 ` FC00::/7 ` 网段，详见 [ ` RFC4193 ` ](https://www.rfc-editor.org/rfc/rfc4193.html)。
 
 - **timeout**
 
@@ -183,7 +181,7 @@ DNS 上游服务器配置信息。
   * 建议：
     + 设置局域网上游服务器，建议首选 ` 默认 udp 协议、默认 53 端口 ` 方式。
     + 设置互联网上游服务器，建议首选 ` DoH ( DNS-over-HTTPS ) ` 方式。
-    + 每一组上游服务器，一般不超过 5 个。
+    + 每组上游服务器，一般不超过 5 个。
   * 多个上游服务器用 ` 英文逗号 ` 分隔。
   * 示例：
     + ` A.B.C.D ` ：默认 ` udp ` 协议、默认 ` 53 ` 端口；
@@ -193,7 +191,7 @@ DNS 上游服务器配置信息。
     + ` tcp://A.B.C.D ` ：指定 ` tcp ` 协议、默认 ` 53 ` 端口；
     + ` tcp://A.B.C.D:53 ` ：指定 ` tcp ` 协议、指定 ` 53 ` 端口；
     + ` https://A.B.C.D/dns-query ` ：加密 DoH ( DNS-over-HTTPS )；
-    + ` /name.lan/A.B.C.D ` ：为特定域名 ` name.lan ` 指定上游服务器。
+    + ` /name.lan/A.B.C.D ` ：为特定域名 ` name.lan ` 指定 ` A.B.C.D ` 上游服务器。
   * 采用 IP 地址可避免上游服务器在多个运营商网络切换带来性能波动。
 
 - **mode**
@@ -217,29 +215,24 @@ DNS 上游服务器配置信息。
 
 - **refreshOnCall**
 
-  * 为 ` true ` 时，每次客户端请求都会启动后台刷新任务，更新缓存内容，滑动缓存有效期。
-  * 为 ` false ` 时，有效期内不启动后台刷新任务。
+  * 每次客户端请求，是否启动后台刷新任务，更新缓存内容，滑动缓存有效期。
 
 #### **4.2.4. dns/custom 配置节**
 
-自定义域名解析的配置信息。
+自定义域名解析的配置信息；多个配置用 ` 英文逗号 ` 分隔。
 
 - **a**：自定义 A 记录域名解析
 
-  * 多个配置用 ` 英文逗号 ` 分隔。
   * 示例： ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` 。
 
 - **aaaa**：自定义 AAAA 记录域名解析
-  * 多个配置用 ` 英文逗号 ` 分隔。
   * 示例： ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
 
 - **cname**：自定义 CName 记录域名解析
-  * 多个配置用 ` 英文逗号 ` 分隔。
   * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
   * 示例： ` /name.lan/cname.lan ` ：将 ` name.lan ` 指向 ` cname.lan ` 。
 
 - **mx**：自定义 MX 记录域名解析
-  * 多个配置用 ` 英文逗号 ` 分隔。
   * 优先级和指向记录之间用 ` 英文空格 ` 分隔。
   * 示例： ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
 
