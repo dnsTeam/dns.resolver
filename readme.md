@@ -17,12 +17,12 @@
   * 一般情况下，局域网带宽更高、响应时间更短。
 
 - **提升安全性和隐私性**
-  * 支持 ` DoH ( DNS-over-HTTPS ) ` 协议访问上游服务器。
+  * 支持 ` DoH ( DNS-over-HTTPS ) ` 协议上游服务器。
   * 基于行业通用的 HTTPS 安全协议，传输过程中请求和响应都是对称加密的，可有效防止第三方监视和篡改，从此告别 DNS 劫持污染。
 
 - **自定义域名解析**
-  * 基于用户配置，自定义特定域名的 DNS 响应结果。
-  * 支持 A、AAAA、CName、MX 等常见记录类型。
+  * 基于用户配置，自定义特定域名的上游服务器。
+  * 基于用户配置，自定义特定域名的 DNS 响应结果；支持 A、AAAA、CName、MX 等常用记录类型。
 
 - **拦截广告、跟踪、恶意软件、钓鱼或欺诈域名等**【待实现】
   * 基于规则进行判断，命中时返回 NxDomain 状态码。
@@ -42,15 +42,15 @@
 
 - 在 windows 中直接双击打开运行应用程序。
 
-- 在 windows 命令行中，
-  * ` cd C:\dns.resolver ` ；
-  * ` dns ` 。
+- 或者，在 windows 命令行中，
+  * ` cd C:\dns.resolver ` ：跳转到应用程序文件夹；
+  * ` dns ` ：运行应用。
 
 - 在 Linux 命令行中，
-  * ` cd /dns.resolver ` ；
-  * ` ./dns ` 。
+  * ` cd /dns.resolver ` ：跳转到应用程序文件夹；
+  * ` ./dns ` ：运行应用。
 
-### **3.2. linux systemd**
+### **3.2. linux systemd 服务**
 
 - 在 ` /lib/systemd/system/ ` 目录创建 ` dns.resolver.service ` 文件，内容示例如下：
 
@@ -78,6 +78,8 @@ WantedBy=multi-user.target
   * ` systemctl start dns.resolver ` 启动服务。
   * ` systemctl enable dns.resolver ` 将服务加入开机启动列表。
   * ` systemctl status dns.resolver ` 或 ` journalctl -xeu dns.resolver ` 查看日志。
+
+- 在 linux 系统中，小于 1024 的端口需要 root 用户权限。
 
 ### **3.3. windows 任务计划**
 
@@ -182,9 +184,9 @@ DNS 上游服务器配置信息。
   * 格式： ` “限定域名 + 协议 + IP 地址 + 端口号” ` 。
     + 多个上游服务器用 ` 英文逗号 ` 分隔。
   * 建议：
-    + 局域网首选 ` 默认 udp 协议、默认 53 端口 ` 方式，
-    + 互联网首选 ` DoH ( DNS-over-HTTPS ) ` 方式。
-    + 默认上游服务一般指定 2 - 5 个即可。
+    + 设置局域网上游服务器，建议首选 ` 默认 udp 协议、默认 53 端口 ` 方式，
+    + 设置互联网上游服务器，建议首选 ` DoH ( DNS-over-HTTPS ) ` 方式。
+    + 每一组上游服务器，一般指定 2 - 5 个即可。
   * 示例：
     + ` A.B.C.D ` ：默认 ` udp ` 协议、默认 ` 53 ` 端口；
     + ` A.B.C.D:53 ` ：默认 ` udp ` 协议、指定 ` 53 ` 端口；
@@ -201,7 +203,7 @@ DNS 上游服务器配置信息。
   * 缓存未命中时，同时访问多个上游服务器的等待模式，有 any 和 all 两个选项。
     + any : 任一上游服务器返回结果后继续；其他上游服务器在后台处理。
     + all : 等待所有的上游服务器，全部返回结果后再继续。
-  * 多个上游服务器的响应结果，去重后存储到缓存中。
+  * 两种模式都可以实现：多个上游服务器的响应结果，去重后存储到缓存中。
 
 - **timeout**
 
@@ -217,42 +219,31 @@ DNS 上游服务器配置信息。
 
 - **refreshOnCall**
 
-  * 有效期内，客户端请求时，立即返回命中的缓存结果。
-  * 当 ` refreshOnCall = true ` 时，启动后台刷新任务，更新缓存内容，滑动缓存有效期。
+  * 为 ` true ` 时，每次客户端请求都会启动后台刷新任务，更新缓存内容，滑动缓存有效期。
+  * 为 ` false ` 时，有效期内不启动后台刷新任务。
 
 #### **4.2.4. dns/custom 配置节**
 
 自定义域名解析的配置信息。
 
-- **a**
+- **a**：自定义 A 记录域名解析
 
-  * 自定义 A 记录域名解析，格式： ` “域名 + IPv4 地址” ` 。
-    + 多个自定义解析用 ` 英文逗号 ` 分隔。
-  * 示例：
-    + ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` 。
+  * 多个配置用 ` 英文逗号 ` 分隔。
+  * 示例： ` /name.lan/A.B.C.D ` ：将 ` name.lan ` 解析为 ` A.B.C.D ` 。
 
-- **aaaa**
+- **aaaa**：自定义 AAAA 记录域名解析
+  * 多个配置用 ` 英文逗号 ` 分隔。
+  * 示例： ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
 
-  * 自定义 AAAA 记录域名解析，格式： ` “域名 + IPv6 地址” ` 。
-    + 多个自定义解析用 ` 英文逗号 ` 分隔。
-  * 示例：
-    + ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
-
-- **cname**
-
-  * 自定义 CName 记录域名解析，格式： ` “域名 + 别名” ` 。
-    + 多个自定义解析用 ` 英文逗号 ` 分隔。
+- **cname**：自定义 CName 记录域名解析
+  * 多个配置用 ` 英文逗号 ` 分隔。
   * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
-  * 示例：
-    + ` /name.lan/cname.lan ` ：` cname.lan ` 为 ` name.lan ` 的别名。
+  * 示例： ` /name.lan/cname.lan ` ：将 ` name.lan ` 指向 ` cname.lan ` 。
 
-- **mx**
-
-  * 自定义 MX 记录域名解析，格式： ` “域名 + 优先级 + 指向 A 或 AAAA 记录” ` 。
-    + 多个自定义解析用 ` 英文逗号 ` 分隔。
-    + 优先级和指向记录之间用 ` 英文空格 ` 分隔。
-  * 示例：
-    + ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
+- **mx**：自定义 MX 记录域名解析
+  * 多个配置用 ` 英文逗号 ` 分隔。
+  * 优先级和指向记录之间用 ` 英文空格 ` 分隔。
+  * 示例： ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
 
 ## **5. 验证 DNS 响应**
 
