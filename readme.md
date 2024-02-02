@@ -215,11 +215,11 @@ DNS 上游服务器配置信息。
 
 - **refreshOnCall**
 
-  * 每次客户端请求，是否启动后台刷新任务，更新缓存内容，滑动缓存有效期。
+  * 每次客户端请求，是否启动后台刷新任务，更新缓存内容。
 
 #### **4.2.4. dns/custom 配置节**
 
-自定义域名解析的配置信息；多个配置用 ` 英文逗号 ` 分隔。
+【可选】自定义域名解析的配置信息；多个配置用 ` 英文逗号 ` 分隔。
 
 - **a**：自定义 A 记录
 
@@ -229,12 +229,13 @@ DNS 上游服务器配置信息。
   * 示例： ` /name.lan/A:B:C:D:E:F:G:H ` ：将 ` name.lan ` 解析为 ` A:B:C:D:E:F:G:H ` 。
 
 - **cname**：自定义 CName 记录
-  * 解析 A 和 AAAA 记录时，含 CName 以及 CName 对应的 A 和 AAAA 记录。
   * 示例： ` /name.lan/cname.lan ` ：将 ` name.lan ` 指向 ` cname.lan ` 。
+  * 解析 A 记录时，含 CName 及其对应的 A 记录。
+  * 解析 AAAA 记录时，含 CName 及其对应的 AAAA 记录。
 
 - **mx**：自定义 MX 记录
+  * 示例： ` /name.lan/10 mx.name.lan ` ：将 ` name.lan ` 指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
   * 优先级和指向记录之间用 ` 英文空格 ` 分隔。
-  * 示例： ` /name.lan/10 mx.name.lan ` ：` name.lan ` 的 MX 记录指向 ` mx.name.lan ` ，优先级为 ` 10 ` 。
 
 ## **5. 验证 DNS 响应**
 
