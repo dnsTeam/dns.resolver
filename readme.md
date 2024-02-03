@@ -34,20 +34,20 @@
 - 复制一份 ` appsettings.sample.json ` 文件，重命名为 ` appsettings.json ` 。
 - 根据需要修改 ` appsettings.json ` 中的配置信息；详见 ` 4. 配置文件说明 ` 。
 - 根据需要，允许应用通过防火墙，或开放配置文件中的本地侦听端口 。
-- 根据需要，为应用程序文件授予运行权限。
+- 根据需要，为应用文件授予运行权限。
 
 ### **3.1. 直接运行**
 
 试用的时候，可以选择此方式。
 
-- 在 windows 中直接双击打开运行应用程序。
+- 在 windows 中直接双击打开运行应用。
 
 - 或者，在 windows 命令行中，
-  * ` cd C:\dns.resolver ` ：跳转到应用程序文件夹；
+  * ` cd C:\dns.resolver ` ：跳转到应用文件夹；
   * ` dns ` ：运行应用。
 
 - 在 Linux 命令行中，
-  * ` cd /dns.resolver ` ：跳转到应用程序文件夹；
+  * ` cd /dns.resolver ` ：跳转到应用文件夹；
   * ` ./dns ` ：运行应用。
 
 ### **3.2. linux systemd 服务**
@@ -102,7 +102,7 @@ WantedBy=multi-user.target
 
 ## **4. 配置文件说明**
 
-配置文件 appsettings.json 位于应用程序相同的文件夹下。
+配置文件 appsettings.json 位于应用相同的文件夹下。
 
 ### **4.1. 样例**
 
