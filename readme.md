@@ -96,7 +96,7 @@ WantedBy=multi-user.target
 
 ## **4. 配置文件说明**
 
-配置文件 appsettings.json 位于应用相同的文件夹下。
+配置文件 appsettings.json 位于应用程序所在根目录。
 
 ### **4.1. 样例**
 
